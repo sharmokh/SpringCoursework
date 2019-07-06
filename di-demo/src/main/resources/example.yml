@@ -1,0 +1,41 @@
+# this is a comment
+
+name: John
+
+names: # List of Names
+  - John
+  - Paul
+  - Ringo
+
+pound_sign: "#"
+
+book:
+  author: Joe Buck
+  publisher: random house
+
+truth: yes
+
+another_truth: True
+
+more_true: true
+
+false:
+  - no
+  - false
+  - False
+  - FALSE
+
+string_val: "This is it's quote"
+
+include_new_lines: | # Multi Line Text
+  ablkj valkfjea
+  eaea lkfeae efae
+  feaefa
+  feafeaf efaefa
+
+include_in_line: < # Single Line Text
+  feafe
+  efa efaew efeaw
+  fwea
+  efaea feafe
+  feafea
