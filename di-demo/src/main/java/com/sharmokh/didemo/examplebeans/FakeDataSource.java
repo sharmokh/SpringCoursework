@@ -1,4 +1,4 @@
-package com.sharmokh.didemo.DataSource;
+package com.sharmokh.didemo.examplebeans;
 
 public class FakeDataSource {
 

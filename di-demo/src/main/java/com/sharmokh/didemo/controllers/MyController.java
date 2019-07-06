@@ -1,11 +1,9 @@
 package com.sharmokh.didemo.controllers;
 
 import com.sharmokh.didemo.services.GreetingService;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Controller;
 
 @Controller
-@Primary
 public class MyController {
 
     private GreetingService greetingService;
