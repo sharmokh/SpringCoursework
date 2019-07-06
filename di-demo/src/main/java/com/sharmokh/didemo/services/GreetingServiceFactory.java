@@ -9,16 +9,17 @@ public class GreetingServiceFactory {
     }
 
     public GreetingService createGreetingService(String lang) {
-        switch (lang) {
-            case "en" :
-                return greetingRepository.getEnglishGreeting();
-            case "es" :
-                return greetingRepository.getSpanishGreeting();
-            case "de" :
-                return greetingRepository.getGermanGreeting();
-            default:
-                return greetingRepository.getEnglishGreeting();
-        }
-    }
 
+        switch (lang){
+            case "en":
+                return new PrimaryGreetingService(greetingRepository);
+            case "de":
+                return new GermanGreetingService(greetingRepository);
+            case "es":
+                return new SpanishGreetingService(greetingRepository);
+            default:
+                return new PrimaryGreetingService(greetingRepository);
+        }
+
+    }
 }

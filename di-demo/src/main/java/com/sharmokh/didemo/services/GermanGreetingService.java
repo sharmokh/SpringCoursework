@@ -1,15 +1,15 @@
 package com.sharmokh.didemo.services;
 
-public class PrimaryGreetingService implements GreetingService {
+public class GermanGreetingService implements GreetingService {
 
     private GreetingRepository greetingRepository;
 
-    public PrimaryGreetingService(GreetingRepository greetingRepository) {
+    public GermanGreetingService(GreetingRepository greetingRepository) {
         this.greetingRepository = greetingRepository;
     }
 
     @Override
     public String sayGreeting() {
-        return greetingRepository.getEnglishGreeting();
+        return greetingRepository.getGermanGreeting();
     }
 }

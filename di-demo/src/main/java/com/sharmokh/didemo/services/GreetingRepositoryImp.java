@@ -1,5 +1,8 @@
 package com.sharmokh.didemo.services;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class GreetingRepositoryImp implements GreetingRepository {
 
     @Override
