@@ -1,6 +1,8 @@
 package com.sharmokh.recipeapp.model;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -8,6 +10,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Recipe {
 
     // Auto-generated ID
@@ -27,7 +30,7 @@ public class Recipe {
     private Difficulty difficulty;
 
     // Set of Ingredients mapped by Recipe and cascade to delete ingredients if recipe is deleted
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "recipe")
     private Set<Ingredient> ingredients = new HashSet<>();
 
     // Large Object Storage
@@ -41,7 +44,7 @@ public class Recipe {
     private Notes notes;
 
     // Each Recipe can be a part of multiple Categories
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "recipe_category",
                joinColumns = @JoinColumn(name = "recipe_id"),
                inverseJoinColumns = @JoinColumn(name = "category_id"))
@@ -58,4 +61,22 @@ public class Recipe {
         notes.setRecipe(this);
     }
 
+    @Builder
+    public Recipe(Long id, String description, Integer prepTime, Integer cookTime, Integer servings, String source,
+                  String url, Difficulty difficulty, Set<Ingredient> ingredients, String directions, Byte[] image,
+                  Notes notes, Set<Category> categories) {
+        this.id = id;
+        this.description = description;
+        this.prepTime = prepTime;
+        this.cookTime = cookTime;
+        this.servings = servings;
+        this.source = source;
+        this.url = url;
+        this.difficulty = difficulty;
+        this.ingredients = ingredients;
+        this.directions = directions;
+        this.image = image;
+        this.notes = notes;
+        this.categories = categories;
+    }
 }

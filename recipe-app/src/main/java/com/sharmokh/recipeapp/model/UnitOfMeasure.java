@@ -1,6 +1,8 @@
 package com.sharmokh.recipeapp.model;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import javax.persistence.Id;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class UnitOfMeasure {
 
     // Auto-generated ID
@@ -18,4 +21,9 @@ public class UnitOfMeasure {
 
     private String description;
 
+    @Builder
+    public UnitOfMeasure(Long id, String description) {
+        this.id = id;
+        this.description = description;
+    }
 }

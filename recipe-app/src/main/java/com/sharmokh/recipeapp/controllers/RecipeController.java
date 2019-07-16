@@ -15,6 +15,7 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
+    // Receives a recipe id and renders the recipe in HTML
     @RequestMapping({"/recipe/show/{id}"})
     public String getRecipePage(@PathVariable String id, Model model) {
 

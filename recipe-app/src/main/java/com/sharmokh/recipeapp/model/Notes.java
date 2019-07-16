@@ -1,11 +1,14 @@
 package com.sharmokh.recipeapp.model;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(exclude = {"recipe"})
 @Entity
 public class Notes {
@@ -22,4 +25,10 @@ public class Notes {
     @Lob
     private String recipeNotes;
 
+    @Builder
+    public Notes(Long id, Recipe recipe, String recipeNotes) {
+        this.id = id;
+        this.recipe = recipe;
+        this.recipeNotes = recipeNotes;
+    }
 }
