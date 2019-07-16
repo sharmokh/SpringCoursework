@@ -14,14 +14,14 @@ public class IngredientCommand {
     private Long id;
     private String description;
     private BigDecimal amount;
-    private UnitOfMeasureCommand unitOfMeasureCommand;
+    private UnitOfMeasureCommand unitOfMeasure;
 
     @Builder
     public IngredientCommand(Long id, String description, BigDecimal amount,
-                             UnitOfMeasureCommand unitOfMeasureCommand) {
+                             UnitOfMeasureCommand unitOfMeasure) {
         this.id = id;
         this.description = description;
         this.amount = amount;
-        this.unitOfMeasureCommand = unitOfMeasureCommand;
+        this.unitOfMeasure = unitOfMeasure;
     }
 }
