@@ -12,16 +12,17 @@ import java.math.BigDecimal;
 @Setter
 public class IngredientCommand {
     private Long id;
+    private Long recipeId;
     private String description;
     private BigDecimal amount;
-    private UnitOfMeasureCommand unitOfMeasure;
+    private UnitOfMeasureCommand uom;
 
     @Builder
-    public IngredientCommand(Long id, String description, BigDecimal amount,
-                             UnitOfMeasureCommand unitOfMeasure) {
+    public IngredientCommand(Long id, Long recipeId, String description, BigDecimal amount, UnitOfMeasureCommand uom) {
         this.id = id;
+        this.recipeId = recipeId;
         this.description = description;
         this.amount = amount;
-        this.unitOfMeasure = unitOfMeasure;
+        this.uom = uom;
     }
 }
