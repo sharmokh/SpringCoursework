@@ -5,7 +5,10 @@ import com.sharmokh.recipeapp.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Slf4j
 @Controller
@@ -18,8 +21,7 @@ public class RecipeController {
     }
 
     // Get Method - receives a recipe id and renders the recipe in HTML
-    @GetMapping
-    @RequestMapping({"/recipe/{id}/show"})
+    @GetMapping({"/recipe/{id}/show"})
     public String getRecipePage(@PathVariable String id, Model model) {
 
         model.addAttribute("recipe", recipeService.findById(Long.valueOf(id)));
@@ -27,8 +29,7 @@ public class RecipeController {
     }
 
     // Get Method - template to update recipe
-    @GetMapping
-    @RequestMapping("recipe/{id}/update")
+    @GetMapping("recipe/{id}/update")
     public String updateRecipePage(@PathVariable String id, Model model) {
 
         model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(id)));
@@ -38,8 +39,7 @@ public class RecipeController {
     }
 
     // Get Method - template for new recipe
-    @GetMapping
-    @RequestMapping({"/recipe/new"})
+    @GetMapping({"/recipe/new"})
     public String newRecipePage(Model model) {
 
         model.addAttribute("recipe", new RecipeCommand());
@@ -49,8 +49,7 @@ public class RecipeController {
     }
 
     // Post Method - save or update a recipe
-    @PostMapping
-    @RequestMapping("recipe")
+    @PostMapping("recipe")
     public String saveOrUpdate(@ModelAttribute RecipeCommand command) {
 
         RecipeCommand savedCommand = recipeService.saveRecipeCommand(command);
@@ -59,8 +58,7 @@ public class RecipeController {
         return "redirect:/recipe/" + savedCommand.getId() + "/show";
     }
 
-    @GetMapping
-    @RequestMapping("recipe/{id}/delete")
+    @GetMapping("recipe/{id}/delete")
     public String deleteRecipe(@PathVariable String id, Model model) {
 
         log.debug("Delete Recipe ID: " + id);

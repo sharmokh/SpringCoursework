@@ -17,38 +17,55 @@
 <body>
 <div class="container-fluid" style="margin-top: 20px">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-8 col-md-offset-2">
             <form  th:object="${recipe}" th:action="@{/recipe/}"  method="post">
                 <input type="hidden" th:field="*{id}"/>
                 <div class="pannel-group">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h1 class="panel-title">Edit Recipe Information</h1>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <h2>Edit Recipe Information</h2>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="btn btn-default" href="#" th:href="@{'/recipe/' + ${recipe.id} + '/image'}"
+                                       role="button">Change Image</a>
+                                </div>
+                            </div>
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-md-3 form-group">
-                                    <label>Recipe Description:</label>
-                                    <input type="text" class="form-control" th:field="*{description}"/>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3 form-group">
-                                    <label>Categories:</label>
-                                </div>
-                                <div class="col-md-9 form-group">
-                                    <div class="radio">
-                                        <label>
-                                            <input type="checkbox" value=""/>
-                                            Cat 1
-                                        </label>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <label>Recipe Description:</label>
+                                            <input type="text" class="form-control" th:field="*{description}"/>
+                                        </div>
                                     </div>
-                                    <div class="radio" th:remove="all">
-                                        <label>
-                                            <input type="checkbox" value=""/>
-                                            Cat 2
-                                        </label>
+                                    <div class="row">
+                                        <div class="col-md-3 form-group">
+                                            <label>Categories:</label>
+                                        </div>
+                                        <div class="col-md-3 form-group">
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="checkbox" value=""/>
+                                                        Cat 1
+                                                </label>
+                                            </div>
+                                            <div class="radio" th:remove="all">
+                                                <label>
+                                                    <input type="checkbox" value=""/>
+                                                        Cat 2
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <img src="../../static/images/no_image.jpg"
+                                         th:src="@{'/recipe/' + ${recipe.id} + '/recipeimage'}"
+                                         width="200" height="200">
                                 </div>
                             </div>
                             <div class="row">
@@ -62,10 +79,11 @@
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Difficulty:</label>
-                                    <select class="form-control">
-                                        <option>Easy</option>
-                                        <option>Medium</option>
-                                        <option>Hard</option>
+                                    <select class="form-control" th:field="*{difficulty}">
+                                        <option th:each="difValue : ${T(com.sharmokh.recipeapp.model.Difficulty).values()}"
+                                            th:value="${difValue.name()}"
+                                            th:text="${difValue.name()}"
+                                        >Value</option>
                                     </select>
                                 </div>
                             </div>
@@ -88,10 +106,10 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <div class="row">
-                                <div class="col-md-11">
+                                <div class="col-md-10">
                                     <h1 class="panel-title">Ingredients</h1>
                                 </div>
-                                <div class="col-md-1">
+                                <div class="col-md-2">
                                     <a class="btn btn-default" th:href="'/recipe/' + *{id} + '/ingredients'" role="button">Edit</a>
                                 </div>
                             </div>

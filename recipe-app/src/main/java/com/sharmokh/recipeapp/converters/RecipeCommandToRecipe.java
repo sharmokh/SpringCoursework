@@ -49,7 +49,7 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
                      .difficulty(recipeCommand.getDifficulty())
                      .ingredients(ingredients)
                      .directions(recipeCommand.getDirections())
-                     .image(recipeCommand.getImage())
+                     // .images(recipeCommand.getImage())
                      .notes(notesConverter.convert(recipeCommand.getNotes()))
                      .categories(categories)
                      .build();
