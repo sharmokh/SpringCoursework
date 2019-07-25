@@ -3,6 +3,7 @@ package com.sharmokh.recipeapp.services;
 import com.sharmokh.recipeapp.commands.RecipeCommand;
 import com.sharmokh.recipeapp.converters.RecipeCommandToRecipe;
 import com.sharmokh.recipeapp.converters.RecipeToRecipeCommand;
+import com.sharmokh.recipeapp.exceptions.NotFoundException;
 import com.sharmokh.recipeapp.model.Recipe;
 import com.sharmokh.recipeapp.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +35,7 @@ public class RecipeServiceImpl implements RecipeService {
         Optional<Recipe> optionalRecipe = recipeRepository.findById(id);
 
         if (!optionalRecipe.isPresent()) {
-            throw new RuntimeException("Recipe Not Found");
+            throw new NotFoundException("Recipe NOT found for ID value: " + id);
         }
 
         return optionalRecipe.get();

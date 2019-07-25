@@ -2,6 +2,7 @@ package com.sharmokh.recipeapp.services;
 
 import com.sharmokh.recipeapp.converters.RecipeCommandToRecipe;
 import com.sharmokh.recipeapp.converters.RecipeToRecipeCommand;
+import com.sharmokh.recipeapp.exceptions.NotFoundException;
 import com.sharmokh.recipeapp.model.Recipe;
 import com.sharmokh.recipeapp.repositories.RecipeRepository;
 import org.junit.Before;
@@ -61,4 +62,14 @@ public class RecipeServiceImplTest {
         assertEquals(1, recipes.size());
         verify(recipeRepository, times(1)).findAll();
     }
+
+    @Test(expected = NotFoundException.class)
+    public void testGetRecipeByIdNotFound() throws Exception {
+        Optional<Recipe> recipeOptional = Optional.empty();
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        Recipe recipeReturned = recipeService.findById(1L);
+    }
+
 }
