@@ -7,13 +7,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 @Slf4j
 @Controller
 public class RecipeController {
 
+    private static final String RECIPE_FORM = "recipe/recipe_form";
     private final RecipeService recipeService;
 
     public RecipeController(RecipeService recipeService) {
@@ -35,7 +39,7 @@ public class RecipeController {
         model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(id)));
         log.debug("Updating Recipe ID: " + id);
 
-        return "recipe/recipe_form";
+        return RECIPE_FORM;
     }
 
     // Get Method - template for new recipe
@@ -45,12 +49,16 @@ public class RecipeController {
         model.addAttribute("recipe", new RecipeCommand());
         log.debug("Creating new recipe.");
 
-        return "recipe/recipe_form";
+        return RECIPE_FORM;
     }
 
     // Post Method - save or update a recipe
     @PostMapping("recipe")
-    public String saveOrUpdate(@ModelAttribute RecipeCommand command) {
+    public String saveOrUpdate(@Valid @ModelAttribute("recipe") RecipeCommand command, BindingResult result) {
+
+        if (result.hasErrors()) {
+            return RECIPE_FORM;
+        }
 
         RecipeCommand savedCommand = recipeService.saveRecipeCommand(command);
         log.debug("New or Updated Recipe ID: " + savedCommand.getId());
@@ -70,16 +78,6 @@ public class RecipeController {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
     public ModelAndView handleNotFound(Exception exception) {
-        log.error(exception.getMessage());
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("error");
-        modelAndView.addObject("exception", exception);
-        return modelAndView;
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(NumberFormatException.class)
-    public ModelAndView handleNumberFormat(Exception exception) {
         log.error(exception.getMessage());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("error");

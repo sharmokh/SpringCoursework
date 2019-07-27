@@ -1,5 +1,6 @@
 package com.sharmokh.recipeapp.controllers;
 
+import com.sharmokh.recipeapp.commands.RecipeCommand;
 import com.sharmokh.recipeapp.exceptions.NotFoundException;
 import com.sharmokh.recipeapp.model.Recipe;
 import com.sharmokh.recipeapp.services.RecipeService;
@@ -7,14 +8,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class RecipeControllerTest {
 
@@ -28,7 +31,9 @@ public class RecipeControllerTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         controller = new RecipeController(recipeService);
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(controller)
+                .setControllerAdvice(new ControllerExceptionHandler())
+                .build();
     }
 
     @Test
@@ -56,5 +61,37 @@ public class RecipeControllerTest {
         mockMvc.perform(get("/recipe/abc/show"))
                 .andExpect(status().isBadRequest())
                 .andExpect(view().name("error"));
+    }
+
+    @Test
+    public void testPostNewRecipe() throws Exception {
+        RecipeCommand command = RecipeCommand.builder().id(2L).build();
+
+        when(recipeService.saveRecipeCommand(any())).thenReturn(command);
+
+        mockMvc.perform(post("/recipe")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("id", "")
+                .param("description", "some string")
+                .param("directions", "some directions")
+        )
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/recipe/2/show"));
+    }
+
+    @Test
+    public void testPostNewRecipeFormValidation() throws Exception {
+        RecipeCommand command = RecipeCommand.builder().id(2L).build();
+
+        when(recipeService.saveRecipeCommand(any())).thenReturn(command);
+
+        mockMvc.perform(post("/recipe")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("id", "")
+        )
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("recipe"))
+                .andExpect(view().name("recipe/recipe_form"));
+
     }
 }
