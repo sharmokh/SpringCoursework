@@ -9,11 +9,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class UnitOfMeasureCommand {
-    private Long id;
+    private String id;
     private String description;
 
     @Builder
-    public UnitOfMeasureCommand(Long id, String description) {
+    public UnitOfMeasureCommand(String id, String description) {
         this.id = id;
         this.description = description;
     }

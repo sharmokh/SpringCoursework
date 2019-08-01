@@ -9,11 +9,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class CategoryCommand {
-    private Long id;
+    private String id;
     private String name;
 
     @Builder
-    public CategoryCommand(Long id, String name) {
+    public CategoryCommand(String id, String name) {
         this.id = id;
         this.name = name;
     }

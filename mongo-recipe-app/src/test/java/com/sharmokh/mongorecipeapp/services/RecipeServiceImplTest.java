@@ -39,14 +39,13 @@ public class RecipeServiceImplTest {
 
     @Test
     public void getRecipeByIdTest() {
-        Recipe recipe = new Recipe();
-        recipe.setId(1L);
+        Recipe recipe = Recipe.builder().id("1").build();
 
-        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(recipe));
-        Recipe returnedRecipe = recipeService.findById(1L);
+        when(recipeRepository.findById(anyString())).thenReturn(Optional.of(recipe));
+        Recipe returnedRecipe = recipeService.findById("1");
 
         assertNotNull("Null recipe returned.", returnedRecipe);
-        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, times(1)).findById(anyString());
         verify(recipeRepository, never()).findAll();
     }
 
@@ -67,9 +66,9 @@ public class RecipeServiceImplTest {
     public void testGetRecipeByIdNotFound() throws Exception {
         Optional<Recipe> recipeOptional = Optional.empty();
 
-        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
 
-        Recipe recipeReturned = recipeService.findById(1L);
+        Recipe recipeReturned = recipeService.findById("1");
     }
 
 }

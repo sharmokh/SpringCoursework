@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UnitOfMeasure {
 
-    private Long id;
+    private String id;
     private String description;
 
     @Builder
-    public UnitOfMeasure(Long id, String description) {
+    public UnitOfMeasure(String id, String description) {
         this.id = id;
         this.description = description;
     }

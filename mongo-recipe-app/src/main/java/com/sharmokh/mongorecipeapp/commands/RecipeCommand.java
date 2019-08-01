@@ -18,7 +18,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 public class RecipeCommand {
-    private Long id;
+    private String id;
 
     @NotBlank
     @Size(min = 3, max = 255)
@@ -49,7 +49,7 @@ public class RecipeCommand {
     private Set<CategoryCommand> categories = new HashSet<>();
 
     @Builder
-    public RecipeCommand(Long id, String description, Integer prepTime, Integer cookTime, Integer servings,
+    public RecipeCommand(String id, String description, Integer prepTime, Integer cookTime, Integer servings,
                          String source, String url, String directions, Set<IngredientCommand> ingredients,
                          Difficulty difficulty, Byte[] image, NotesCommand notes, Set<CategoryCommand> categories) {
         this.id = id;

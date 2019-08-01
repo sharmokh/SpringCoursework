@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class CategoryCommandToCategoryTest {
 
     public static final String DESCRIPTION = "description";
-    public static final Long ID = 1L;
+    public static final String ID = "1";
     CategoryCommandToCategory converter;
 
     @Before

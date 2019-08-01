@@ -31,14 +31,14 @@ public class IngredientController {
 
     @GetMapping({"/recipe/{recipeId}/ingredients"})
     public String getIngredientsPage(@PathVariable String recipeId, Model model) {
-        model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(recipeId)));
+        model.addAttribute("recipe", recipeService.findCommandById(recipeId));
         log.debug("Displaying ingredients for Recipe ID: " + recipeId);
         return "recipe/ingredient/list";
     }
 
     @GetMapping({"/recipe/{recipeId}/ingredient/{id}/update"})
     public String updateIngredientPage(@PathVariable String recipeId, @PathVariable String id, Model model) {
-        model.addAttribute("ingredient", ingredientService.findByRecipeIdAndIngredientId(Long.valueOf(recipeId), Long.valueOf(id)));
+        model.addAttribute("ingredient", ingredientService.findByRecipeIdAndIngredientId(recipeId, id));
         model.addAttribute("uomList", unitOfMeasureService.listAllUnitOfMeasures());
         log.debug("Displaying Ingredient ID: " + id);
         return "recipe/ingredient/ingredient_form";
@@ -46,16 +46,16 @@ public class IngredientController {
 
     @GetMapping("recipe/{recipeId}/ingredient/{id}/delete")
     public String deleteRecipe(@PathVariable String recipeId, @PathVariable String id, Model model) {
-        ingredientService.deleteByRecipeIdAndIngredientId(Long.valueOf(recipeId), Long.valueOf(id));
+        ingredientService.deleteByRecipeIdAndIngredientId(recipeId, id);
         return "redirect:/recipe/" + recipeId + "/ingredients";
     }
 
     @GetMapping({"/recipe/{recipeId}/ingredient/new"})
     public String newIngredientPage(@PathVariable String recipeId, Model model) {
-        RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(recipeId));
+        RecipeCommand recipeCommand = recipeService.findCommandById(recipeId);
         // todo raise exception if null
 
-        model.addAttribute("ingredient", IngredientCommand.builder().recipeId(Long.valueOf(recipeId)).uom(new UnitOfMeasureCommand()).build());
+        model.addAttribute("ingredient", IngredientCommand.builder().recipeId(recipeId).uom(new UnitOfMeasureCommand()).build());
         model.addAttribute("uomList", unitOfMeasureService.listAllUnitOfMeasures());
         return "recipe/ingredient/ingredient_form";
     }

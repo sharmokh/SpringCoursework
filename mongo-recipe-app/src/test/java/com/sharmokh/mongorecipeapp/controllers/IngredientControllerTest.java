@@ -45,7 +45,7 @@ public class IngredientControllerTest {
     @Test
     public void testGetIngredientsPage() throws Exception {
         RecipeCommand recipeCommand = new RecipeCommand();
-        when(recipeService.findCommandById(anyLong())).thenReturn(recipeCommand);
+        when(recipeService.findCommandById(anyString())).thenReturn(recipeCommand);
 
         mockMvc.perform(get("/recipe/1/ingredients"))
                 .andExpect(status().isOk())
@@ -56,7 +56,7 @@ public class IngredientControllerTest {
     @Test
     public void testUpdateIngredientPage() throws Exception {
         IngredientCommand ingredientCommand = new IngredientCommand();
-        when(ingredientService.findByRecipeIdAndIngredientId(anyLong(), anyLong())).thenReturn(ingredientCommand);
+        when(ingredientService.findByRecipeIdAndIngredientId(anyString(), anyString())).thenReturn(ingredientCommand);
         when(unitOfMeasureService.listAllUnitOfMeasures()).thenReturn(new HashSet<>());
 
         mockMvc.perform(get("/recipe/1/ingredient/2/update"))
@@ -69,9 +69,9 @@ public class IngredientControllerTest {
     @Test
     public void testNewIngredientPage() throws Exception {
         RecipeCommand recipeCommand = new RecipeCommand();
-        recipeCommand.setId(1L);
+        recipeCommand.setId("1");
 
-        when(recipeService.findCommandById(anyLong())).thenReturn(recipeCommand);
+        when(recipeService.findCommandById(anyString())).thenReturn(recipeCommand);
         when(unitOfMeasureService.listAllUnitOfMeasures()).thenReturn(new HashSet<>());
 
         mockMvc.perform(get("/recipe/1/ingredient/new"))
@@ -79,14 +79,14 @@ public class IngredientControllerTest {
                 .andExpect(view().name("recipe/ingredient/ingredient_form"))
                 .andExpect(model().attributeExists("ingredient"))
                 .andExpect(model().attributeExists("uomList"));
-        verify(recipeService, times(1)).findCommandById(anyLong());
+        verify(recipeService, times(1)).findCommandById(anyString());
     }
 
     @Test
     public void testSaveOrUpdate() throws Exception {
         IngredientCommand ingredientCommand = new IngredientCommand();
-        ingredientCommand.setId(3L);
-        ingredientCommand.setRecipeId(2L);
+        ingredientCommand.setId("3");
+        ingredientCommand.setRecipeId("2");
         when(ingredientService.saveIngredientCommand(any())).thenReturn(ingredientCommand);
 
         mockMvc.perform(post("/recipe/2/ingredient")

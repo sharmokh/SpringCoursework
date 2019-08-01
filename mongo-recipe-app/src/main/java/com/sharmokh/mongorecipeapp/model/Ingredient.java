@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(exclude = {"recipe"})
 public class Ingredient {
 
-    private Long id;
+    private String id;
     private String description;
     private BigDecimal amount;
     private Recipe recipe;
@@ -25,7 +25,7 @@ public class Ingredient {
     }
 
     @Builder
-    public Ingredient(Long id, String description, BigDecimal amount, Recipe recipe, UnitOfMeasure unitOfMeasure) {
+    public Ingredient(String id, String description, BigDecimal amount, Recipe recipe, UnitOfMeasure unitOfMeasure) {
         this.id = id;
         this.description = description;
         this.amount = amount;

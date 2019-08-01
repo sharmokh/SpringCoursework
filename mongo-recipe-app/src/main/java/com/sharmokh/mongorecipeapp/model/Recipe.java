@@ -11,7 +11,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class Recipe {
 
-    private Long id;
+    private String id;
     private String description;
     private Integer prepTime;
     private Integer cookTime;
@@ -37,7 +37,7 @@ public class Recipe {
     }
 
     @Builder
-    public Recipe(Long id, String description, Integer prepTime, Integer cookTime, Integer servings, String source,
+    public Recipe(String id, String description, Integer prepTime, Integer cookTime, Integer servings, String source,
                   String url, Difficulty difficulty, Set<Ingredient> ingredients, String directions, Byte[] image,
                   Notes notes, Set<Category> categories) {
         this.id = id;

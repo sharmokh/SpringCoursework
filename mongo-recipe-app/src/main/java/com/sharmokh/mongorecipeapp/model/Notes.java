@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(exclude = {"recipe"})
 public class Notes {
 
-    private Long id;
+    private String id;
     private Recipe recipe;
     private String recipeNotes;
 
     @Builder
-    public Notes(Long id, Recipe recipe, String recipeNotes) {
+    public Notes(String id, Recipe recipe, String recipeNotes) {
         this.id = id;
         this.recipe = recipe;
         this.recipeNotes = recipeNotes;

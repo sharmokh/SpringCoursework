@@ -12,12 +12,12 @@ import java.util.Set;
 @EqualsAndHashCode(exclude = {"recipes"})
 public class Category {
 
-    private Long id;
+    private String id;
     private String name;
     private Set<Recipe> recipes;
 
     @Builder
-    public Category(Long id, String name, Set<Recipe> recipes) {
+    public Category(String id, String name, Set<Recipe> recipes) {
         this.id = id;
         this.name = name;
         this.recipes = recipes;

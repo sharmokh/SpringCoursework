@@ -12,8 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -38,8 +37,8 @@ public class RecipeControllerTest {
 
     @Test
     public void testGetRecipePage() throws Exception{
-        Recipe recipe = Recipe.builder().id(1L).build();
-        when(recipeService.findById(anyLong())).thenReturn(recipe);
+        Recipe recipe = Recipe.builder().id("1").build();
+        when(recipeService.findById(anyString())).thenReturn(recipe);
 
         mockMvc.perform(get("/recipe/1/show"))
                 .andExpect(status().isOk())
@@ -48,7 +47,7 @@ public class RecipeControllerTest {
 
     @Test
     public void testRecipeNotFound() throws Exception {
-        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+        when(recipeService.findById(anyString())).thenThrow(NotFoundException.class);
 
         mockMvc.perform(get("/recipe/1/show"))
                 .andExpect(status().isNotFound())
@@ -56,16 +55,8 @@ public class RecipeControllerTest {
     }
 
     @Test
-    public void testRecipeNumberFormatException() throws Exception {
-
-        mockMvc.perform(get("/recipe/abc/show"))
-                .andExpect(status().isBadRequest())
-                .andExpect(view().name("error"));
-    }
-
-    @Test
     public void testPostNewRecipe() throws Exception {
-        RecipeCommand command = RecipeCommand.builder().id(2L).build();
+        RecipeCommand command = RecipeCommand.builder().id("2").build();
 
         when(recipeService.saveRecipeCommand(any())).thenReturn(command);
 
@@ -81,7 +72,7 @@ public class RecipeControllerTest {
 
     @Test
     public void testPostNewRecipeFormValidation() throws Exception {
-        RecipeCommand command = RecipeCommand.builder().id(2L).build();
+        RecipeCommand command = RecipeCommand.builder().id("2").build();
 
         when(recipeService.saveRecipeCommand(any())).thenReturn(command);
 
